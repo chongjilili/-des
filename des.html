@@ -1,0 +1,67 @@
+<html>
+
+<head>
+
+    <title>DES加密</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <script src="js/des.js"></script>
+
+
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+
+<table border=0>
+
+    <form name="encme">
+
+        <tr><td>原
+
+            <br />
+
+            文</td><td>
+
+            <textarea name="inps" cols="50" rows="10"></textarea>
+
+        </td></tr>
+
+        <tr><td>
+
+            密
+
+            <br />
+
+            码</td><td>
+
+            <input type="password" name="deskey" maxlength="100" size="16" value="">
+
+            <input type="button" onclick="javascript:encMe()" value="&#8595;加密&#8595;">
+
+            <input type="button" onclick="javascript:uncMe()" value="&#8593;解密&#8593;">
+
+        </td></tr>
+
+        <tr><td>
+
+            密
+
+            <br />
+
+            文</td><td>
+
+            <textarea name="outs" cols="50" rows="10"></textarea>
+
+        </td></tr>
+
+    </form>
+
+</table>
+
+</body>
+
+</html>

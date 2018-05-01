@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/util.js"></script>
+
+    <script src="js/DesCF.js"></script>
+    <script src="layui/layui.js"> </script>
+    <script src="js/vue.js"></script>
+    <script src="js/jquery-1.9.1.js"></script>
+    <link href="layui/css/layui.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<script type="application/javascript">
+    window.onload = function () {
+
+
+
+        var dcf = new DesCF(
+            {
+                differential:1
+            }
+        );
+
+        var cfarray = dcf.CFArray;
+
+        console.log(cfarray);
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: '差分分析',
+                cfarray:cfarray
+            },
+            methods:{
+                cfchange:function (message, event) {
+                    // 现在我们可以访问原生事件对象
+                    if (event) event.preventDefault();
+                    var cf = $('#cf').val();
+                    var p = /[0,1]{6}/img;
+                    if(p.test(cf)){
+                        var dcf = new DesCF(
+                            {
+                                differential:parseInt(cf,2)
+                            }
+                        );
+
+                        var cfarray = dcf.CFArray;
+                        console.log(cfarray);
+                        this.cfarray = cfarray;
+                    }else {
+                        layui.use('layer',function () {
+                            var layer = layui.layer;
+                            layer.msg("差分输入是六位二进制数字");
+                        })
+                    }
+                }
+            }
+
+        })
+
+        /*$('#cf').blur(function (e) {
+            var cf = $(this).val();
+            var p = /[0,1]{6}/img;
+            if(p.test(cf)){
+                var dcf = new DesCF(
+                    {
+                        differential:1
+                    }
+                );
+
+                var cfarray = dcf.CFArray;
+                app.$data
+            }else {
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.msg("差分输入是六位二进制数字");
+                })
+            }
+        })*/
+
+
+
+    }
+
+
+
+</script>
+
+<div class="layui-container"  id="app">
+    <header>
+        <h1>{{title}}</h1>
+    </header>
+
+
+
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+            <form class="layui-form" action="#">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入差分</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cf" id="cf" @change="cfchange" placeholder="输入差分" autocomplete="off" class="layui-input" >
+                    </div>
+                </div>
+
+            </form>
+
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>输出差分</th>
+                    <th>输入数量</th>
+                    <th>可能的输入</th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <tr  v-for="(cf ,i) in cfarray" >
+                    <td>{{cf.index}}</td>
+                    <td>{{cf.length*2}}</td>
+                    <td>
+                        <span v-for="(c ,j) in cf" >
+                           ( {{c.cfnum.join(',')}} )
+                        </span>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
